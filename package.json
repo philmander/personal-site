@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "test": "tap"
+  },
+  "dependencies": {
+    "@octokit/rest": "^18.12.0",
+    "express": "^4.18.1",
+    "highlight.js": "^11.5.1",
+    "marked": "^4.0.15"
+  },
+  "devDependencies": {
+    "tap": "^16.2.0"
+  }
+}
