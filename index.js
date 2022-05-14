@@ -1,5 +1,6 @@
 const express = require('express')
 const compression = require('compression')
+const serveImages = require('./serve-images')
 const pageHtml = require('./page-html')
 const contactHtml = require('./contact-html')
 
@@ -9,8 +10,9 @@ const { getBlogPage, getBlogList } = require('./blog-service')
   const app = express()
   const port = 3000
   
-  app.use(compression())
+  app.use('/static', compression())
   app.use('/static', express.static('static'))
+  app.use('/images', serveImages());
   
   app.get('/blog/:pageSlug', async (req, res, next) => {
     try {
