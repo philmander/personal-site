@@ -1,6 +1,5 @@
 const fs = require('fs').promises;
 const { join } = require('path');
-const { parse } = require('url');
 const serveStatic = require('serve-static');
 const { Octokit } = require("@octokit/rest");
 
@@ -32,8 +31,9 @@ module.exports = function() {
     const fullImagePath = join(localImagesDir, imagePath);
     // try to serve the local image
     imageServer(req, res, async () => {
-      const ghPath = join('content/images', imagePath);
+      // image not found locally so get it from github
       try {
+        const ghPath = join('content/images', imagePath);
         const ghRes = await octokit.rest.repos.getContent({ owner, repo, path: ghPath });
         const buff = Buffer.from(ghRes.data.content, 'base64');
         await fs.writeFile(fullImagePath, buff, 'base64')
