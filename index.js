@@ -1,4 +1,5 @@
 const express = require('express')
+const compression = require('compression')
 const pageHtml = require('./page-html')
 const contactHtml = require('./contact-html')
 
@@ -8,6 +9,7 @@ const { getBlogPage, getBlogList } = require('./blog-service')
   const app = express()
   const port = 3000
   
+  app.use(compression())
   app.use('/static', express.static('static'))
   
   app.get('/blog/:pageSlug', async (req, res, next) => {
@@ -19,9 +21,9 @@ const { getBlogPage, getBlogList } = require('./blog-service')
         err.status = 404;
         next(err);
     }
-  });
+  })
 
-    app.get('/', async (req, res, next) => {
+  app.get('/', async (req, res, next) => {
     try {
         const { pageSlug } = req.params;
         res.locals.main = await getBlogList()
@@ -31,7 +33,7 @@ const { getBlogPage, getBlogList } = require('./blog-service')
         err.status = 404;
         next(err);
     }
-  });
+  })
 
   app.use(async (req, res) => {
     const out = pageHtml({
@@ -39,9 +41,9 @@ const { getBlogPage, getBlogList } = require('./blog-service')
       ...res.locals,
     })
     res.send(out)
-  });
+  })
   
   app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`Site is running on ${port}`)
   })
 })()

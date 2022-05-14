@@ -8,9 +8,12 @@ const owner = 'philmander';
 const repo = 'versatile';
 
 marked.setOptions({
-  highlight: (code, lang) => {
-    const language = highlight.getLanguage(lang) ? lang : 'plaintext';
-    return highlight.highlight(lang, code).value;
+  highlight: (code, language) => {
+    try {
+      return highlight.highlight(code, { language }).value;
+    } catch (err) {
+      return highlight.highlight(code, { language: 'plaintext' }).value;
+    }
   },
   langPrefix: 'hljs language-',
   gfm: true,
@@ -35,7 +38,7 @@ async function getBlogList() {
   const blogJSON = await _getContentromGithub(path);
   const blogList = JSON.parse(blogJSON);
   const html = getBlogListHtml(blogList);
-  //cache.set(path, blogRoll);
+  cache.set(path, html);
   return html;
 }
 
