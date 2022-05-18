@@ -5,6 +5,8 @@ const serveImages = require('./serve-images')
 const pageHtml = require('./page-html')
 const contactHtml = require('./contact-html')
 
+const { log } = console
+
 const { getBlogPage, getBlogList } = require('./blog-service')
 
 ;(async () => { 
@@ -30,7 +32,6 @@ const { getBlogPage, getBlogList } = require('./blog-service')
 
   app.get('/', async (req, res, next) => {
     try {
-        const { pageSlug } = req.params;
         res.locals.main = await getBlogList()
         res.locals.aside = contactHtml();
         next();
@@ -55,6 +56,6 @@ const { getBlogPage, getBlogList } = require('./blog-service')
   })
   
   app.listen(port, () => {
-    console.log(`Site is running on ${port}`)
+    log(`Express server is running on port: ${port}`)
   })
 })()

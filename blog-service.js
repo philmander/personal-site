@@ -3,6 +3,7 @@ const getBlogListHtml = require('./blog-list-html');
 const marked = require('marked');
 const highlight = require('highlight.js');
 
+const { log } = console;
 const octokit = new Octokit();
 const owner = 'philmander';
 const repo = 'versatile';
@@ -35,8 +36,10 @@ async function getBlogList() {
   if(cache.get(path)) {
       return cache.get(path);
   }
+  log('Getting list of blog articles from Githuh...')
   const blogJSON = await _getContentromGithub(path);
   const blogList = JSON.parse(blogJSON);
+  log(`${blogList.length} articles found`)
   const html = getBlogListHtml(blogList);
   cache.set(path, html);
   return html;
@@ -53,7 +56,9 @@ async function getBlogPage(slug) {
 
 async function _getContentromGithub(_path) {
   const path = `content/${_path}`
+  log(`Getting "${path}" from Github`)
   const res = await octokit.rest.repos.getContent({ owner, repo, path });
+  log(`${path} retreived`)
   return Buffer.from(res.data.content, 'base64').toString('utf8');
 }
 

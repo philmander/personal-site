@@ -3,6 +3,8 @@ const { join } = require('path');
 const serveStatic = require('serve-static');
 const { Octokit } = require("@octokit/rest");
 
+const { log, warn } = console;
+
 const octokit = new Octokit();
 const owner = 'philmander';
 const repo = 'versatile';
@@ -25,9 +27,12 @@ let ready = false;
   }
 
   // pre-fetch the blog images available in github, so gh api can't be spammed with 404s
+  log('Prefetching image list from Github')
   const ghRes = await octokit.rest.repos.getContent({ owner, repo, path: 'content/images' });
   availableGhImages = ghRes.data.map(file => `/${file.name}`);
+  log(`${availableGhImages.length} image paths retreived`)
 
+  log(`Serving images from "${localImagesDir}"`)
   imageServer = serveStatic(localImagesDir, {
     index: false
   });
@@ -37,6 +42,7 @@ let ready = false;
 module.exports = function() {
   return async (req, res, next) => {
     if (!ready) {
+      warn('Image requested but service is not ready (503)')
       return next(makeHttpError('Not ready', 503, req));
     }
 
@@ -47,10 +53,13 @@ module.exports = function() {
       // image not found locally so get it from github
       try {
         if (!availableGhImages.includes(imagePath)) {
+          warn(`"${imagePath}" requested but does not exist in the available github images list`)
           throw makeHttpError('Not found', 404, req);
         }
+        log(`Requesting ${imagePath} from Github`)
         const ghPath = join('content/images', imagePath);
         const ghRes = await octokit.rest.repos.getContent({ owner, repo, path: ghPath });
+        log(`${imagePath} retrieved`)
         const buff = Buffer.from(ghRes.data.content, 'base64');
         await fs.writeFile(fullImagePath, buff, 'base64')
         imageServer(req, res, err => {
