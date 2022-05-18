@@ -2,7 +2,8 @@ module.exports = ({
   headerTitle,
   css,
   main,
-  aside = ''
+  aside = '',
+  hits,
 }) => 
 `<DOCTYPE html>
 <html>
@@ -26,7 +27,7 @@ module.exports = ({
           </aside>
         </div>
         <footer class="page-footer">
-        
+          <p style="text-align: right"><small>${hits}</small></p>
         </footer>
       </div>
     </div>

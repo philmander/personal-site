@@ -1,4 +1,5 @@
 const express = require('express')
+const Database = require("@replit/database");
 const compression = require('compression')
 const serveImages = require('./serve-images')
 const pageHtml = require('./page-html')
@@ -7,6 +8,8 @@ const contactHtml = require('./contact-html')
 const { getBlogPage, getBlogList } = require('./blog-service')
 
 ;(async () => { 
+  const db = new Database()
+  
   const app = express()
   const port = 3000
   
@@ -38,11 +41,17 @@ const { getBlogPage, getBlogList } = require('./blog-service')
   })
 
   app.use(async (req, res) => {
+    const dbHitsKey = `hits_${req.url}`
+    const hits = await db.get(dbHitsKey) || 0
+    
     const out = pageHtml({
       headerTitle: 'Phil Mander',
+      hits,
       ...res.locals,
     })
+    
     res.send(out)
+    db.set(dbHitsKey, hits + 1)
   })
   
   app.listen(port, () => {
