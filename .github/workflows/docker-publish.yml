@@ -1,0 +1,53 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+env:
+  DOCKER_REGISTRY: registry.digitalocean.com
+  DOCKER_USERNAME: philmander
+  IMAGE_NAME: personal-site
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DigitalOcean Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: registry.digitalocean.com
+          username: ${{ secrets.DO_API_TOKEN }}
+          password: ${{ secrets.DO_API_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        run: |
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/}
+          else
+            VERSION=latest
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Build and push Docker image
+        env:
+          IMAGE_TAG: ${{ steps.meta.outputs.version }}
+        run: |
+          docker compose build
+          docker compose push
+
+      - name: Image details
+        run: |
+          echo "Image pushed to: registry.digitalocean.com/philmander/personal-site:${{ steps.meta.outputs.version }}"

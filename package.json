@@ -1,17 +1,37 @@
 {
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "scripts": {
-    "test": "tap"
+    "start": "node --experimental-strip-types index.ts",
+    "test": "node --experimental-strip-types --test 'spec/**/*.spec.ts'",
+    "compile": "tsc --noEmit",
+    "docker:build": "docker buildx build --platform linux/amd64 -t registry.digitalocean.com/philmander/personal-site:latest .",
+    "docker:build:push": "docker buildx build --platform linux/amd64 -t registry.digitalocean.com/philmander/personal-site:latest --push .",
+    "docker:run": "docker run -p 3000:3000 personal-site",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f",
+    "docker:push": "docker compose push",
+    "docker:pull": "docker compose pull",
+    "docker:push:auth": "bash -c 'echo $DO_API_TOKEN | docker login registry.digitalocean.com -u $DO_API_TOKEN --password-stdin && docker compose build && docker compose push'"
   },
   "dependencies": {
-    "@octokit/rest": "^18.12.0",
-    "@replit/database": "^2.0.2",
+    "@octokit/rest": "^21.0.2",
+    "bunyan": "^1.8.15",
     "compression": "^1.7.4",
-    "express": "^4.18.1",
-    "highlight.js": "^11.5.1",
-    "marked": "^4.0.15",
-    "serve-static": "^1.15.0"
+    "express": "^4.21.1",
+    "highlight.js": "^11.11.0",
+    "marked": "^14.1.2",
+    "serve-static": "^1.16.2"
   },
   "devDependencies": {
-    "tap": "^16.2.0"
+    "@types/bunyan": "^1.8.11",
+    "@types/compression": "^1.7.5",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.2",
+    "@types/serve-static": "^1.15.7",
+    "typescript": "^5.7.2"
   }
 }

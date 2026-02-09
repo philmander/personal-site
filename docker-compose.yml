@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  web:
+    image: ${DOCKER_REGISTRY:-docker.io}/${DOCKER_USERNAME:-username}/personal-site:${IMAGE_TAG:-latest}
+    platform: linux/amd64
+    build: 
+      context: .
+      tags:
+        - ${DOCKER_REGISTRY:-docker.io}/${DOCKER_USERNAME:-username}/personal-site:${IMAGE_TAG:-latest}
+        - ${DOCKER_REGISTRY:-docker.io}/${DOCKER_USERNAME:-username}/personal-site:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - LOG_LEVEL=info
+      - PORT=3000
+    restart: unless-stopped
+    volumes:
+      # Persist cached images between container restarts
+      - images-cache:/app/images
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  images-cache:
