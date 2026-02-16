@@ -14,9 +14,8 @@ COPY package*.json ./
 RUN npm ci --omit=dev
 
 # Copy application source
-COPY *.ts ./
+COPY src ./src
 COPY static ./static
-COPY logger.ts ./
 
 # Create images directory for caching
 RUN mkdir -p images
@@ -30,4 +29,4 @@ ENV NODE_ENV=production
 ENV PORT=3000
 
 # Run the application with type stripping
-CMD ["node", "--experimental-strip-types", "index.ts"]
+CMD ["node", "--experimental-strip-types", "src/index.ts"]

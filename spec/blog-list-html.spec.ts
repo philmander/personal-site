@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
-import getBlogListHtml from '../blog-list-html.ts';
+import getBlogListHtml from '../src/blog-list-html.ts';
 
 const data = [
   {

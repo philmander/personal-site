@@ -4,7 +4,7 @@ import {
     getBlogPage,
   _getContentFromGithub,
   _compileMarkdown,
-} from '../blog-service.ts';
+} from '../src/blog-service.ts';
 
 test('getBlogPage', async () => {
   const content = await getBlogPage('foo');
