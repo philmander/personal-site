@@ -20,13 +20,12 @@ COPY static ./static
 # Create images directory for caching
 RUN mkdir -p images
 
-# Expose port (can be overridden by PORT env var)
-EXPOSE 3000
+# Expose port
 EXPOSE 80
 
 # Set production environment
 ENV NODE_ENV=production
-ENV PORT=3000
+ENV PORT=80
 
 # Run the application with type stripping
 CMD ["node", "--experimental-strip-types", "src/index.ts"]
