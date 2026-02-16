@@ -24,15 +24,20 @@ interface PageLocals {
   app.use('/static', compression());
   app.use('/static', express.static('static'));
   app.use('/images', serveImages());
-  
+
+  app.get('/health', (req: Request, res: Response) => {
+    res.status(200).send('ok');
+  });
+
   app.get('/blog/:pageSlug', async (req: Request, res: Response<any, PageLocals>, next: NextFunction) => {
     try {
         const pageSlug = Array.isArray(req.params.pageSlug) ? req.params.pageSlug[0] : req.params.pageSlug;
         res.locals.main = await getBlogPage(pageSlug);
         next();
     } catch(err: any) {
-        err.status = 404;
-        next(err);
+        logger.error({ err, slug: req.params.pageSlug }, 'Failed to load blog page');
+        res.locals.main = '<p>Sorry, this blog post could not be loaded right now. Please try again later.</p>';
+        next();
     }
   });
 
@@ -42,8 +47,9 @@ interface PageLocals {
         res.locals.main = _compileMarkdown(markdown);
         next();
     } catch(err: any) {
-        err.status = 404;
-        next(err);
+        logger.error({ err }, 'Failed to load privacy page');
+        res.locals.main = '<p>Sorry, this page could not be loaded right now. Please try again later.</p>';
+        next();
     }
   });
 
@@ -53,8 +59,10 @@ interface PageLocals {
         res.locals.aside = contactHtml();
         next();
     } catch(err: any) {
-        err.status = 404;
-        next(err);
+        logger.error({ err }, 'Failed to load blog list');
+        res.locals.main = '<p>Sorry, the blog could not be loaded right now. Please try again later.</p>';
+        res.locals.aside = contactHtml();
+        next();
     }
   });
 
@@ -64,7 +72,7 @@ interface PageLocals {
       main: res.locals.main || '',
       aside: res.locals.aside,
     });
-    
+
     res.send(out);
   });
   
