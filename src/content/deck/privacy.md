@@ -1,13 +1,13 @@
 ## Privacy Policy for Deck
 
-**Last Updated: February 4, 2026**
+**Last Updated: July 19, 2026**
 
-This Privacy Policy describes how **Deck** ("the App") handles your data. Deck is a digital DJ deck application designed for local audio playback.
+This Privacy Policy describes how **Deck** ("the App") handles your data, on both Android and iOS. Deck is a digital DJ deck application designed for local audio playback.
 
 ### 1. Data Collection and Usage
 
 #### Local Audio Files
-Deck requires access to your device's audio files (via the `READ_MEDIA_AUDIO` or `READ_EXTERNAL_STORAGE` permissions) solely to allow you to browse and load your own music library for playback and mixing within the App. 
+Deck requires access to your device's audio files (via the media/storage permissions on Android, or the file and folder access you grant on iOS) solely to allow you to browse and load your own music library for playback within the App. 
 - **No Uploading:** Your audio files are never uploaded to our servers or any third-party servers.
 - **No Metadata Transmission:** We do not transmit metadata (artist, title, etc.) from your files to any server.
 
@@ -18,9 +18,9 @@ To provide a fast experience, the App generates and stores waveform data, BPM, b
 We do **not** share any personal information, audio data, or usage statistics with third parties. The App does not contain any third-party analytics, advertising SDKs, or tracking pixels.
 
 ### 3. Permissions Justification
-- **Foreground Service / Media Playback:** Used to keep audio playing when the App is in the background or the screen is off. A persistent notification is displayed while the service is active.
-- **Wake Lock:** Used to prevent the screen from dimming during a performance.
-- **Storage Access:** Necessary for you to select and play your music files.
+- **Background Audio / Media Playback:** Used to keep audio playing when the App is in the background or the screen is off. On Android this runs as a foreground service with a persistent notification.
+- **Keeping the Screen Awake:** Used to prevent the screen from dimming during a performance.
+- **Storage / File Access:** Necessary for you to select and play your music files.
 
 ### 4. Children's Privacy
 Deck does not knowingly collect any personal information from children. Since the App does not collect any data at all, it is safe for users of all ages.
@@ -32,5 +32,6 @@ All cached data (waveforms, beat grids, metadata) is stored locally on your devi
 We may update our Privacy Policy from time to time. Any changes will be posted on this page with an updated "Last Updated" date.
 
 ### 7. Contact Us
-If you have any questions about this Privacy Policy, please contact us at:
-[Insert Your Contact Email/Website Here]
+If you have any questions about this Privacy Policy, please contact us at
+[philip.mander@gmail.com](mailto:philip.mander@gmail.com) or via
+[deck.dj/support](https://deck.dj/support).

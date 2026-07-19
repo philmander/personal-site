@@ -2,6 +2,27 @@
 
 A modern Node.js blog site built with Express, TypeScript, and Node's native type stripping.
 
+## Domains
+
+One server, three domains, routed on the Host header (`src/sites/site-for-host.ts`):
+
+| Domain | Site |
+|---|---|
+| philmander.com | Personal blog (default for unrecognized hosts, including localhost) |
+| deck.dj | Product site for Deck: landing page, `/support`, `/privacy` |
+| safestudios.nl | Nothing served; `/deck/*` 301-redirects to deck.dj |
+
+`philmander.com/deck/privacy` (the privacy URL published in the Deck app)
+301-redirects to `deck.dj/privacy`.
+
+For local development the sites are reachable at
+http://deck.localhost:3000 and http://safestudios.localhost:3000
+(`*.localhost` resolves to 127.0.0.1 in modern browsers); plain
+http://localhost:3000 serves the blog.
+
+All three domains must point at this server, with TLS certificates for each,
+before the redirects and the published privacy URL resolve.
+
 ## Features
 
 - **Node 24** with native type stripping (no build step required)
@@ -181,14 +202,20 @@ The app will be available at http://localhost:3000
 
 ```
 .
-├── index.ts              # Main Express server
+├── index.ts              # Main Express server + host dispatch
+├── sites/                # One router per domain
+│   ├── site-for-host.ts  # Host header → site mapping
+│   ├── philmander.ts     # philmander.com (blog)
+│   ├── deck.ts           # deck.dj (+ deck-page-html.ts, deck-home-html.ts)
+│   └── safestudios.ts    # safestudios.nl (redirects only)
+├── content/deck/         # deck.dj markdown pages (support, privacy)
 ├── blog-service.ts       # Blog content fetching and rendering
 ├── blog-list-html.ts     # Blog list HTML generation
 ├── page-html.ts          # Page template
 ├── contact-html.ts       # Contact section
 ├── serve-images.ts       # Image serving with GitHub caching
 ├── logger.ts             # Bunyan logger configuration
-├── static/               # Static assets (CSS, images)
+├── static/               # Static assets (CSS, images; static/deck/ for deck.dj)
 ├── spec/                 # Test files
 └── Dockerfile           # Production Docker image
 
