@@ -1,40 +1,21 @@
 import { Router } from 'express';
 import type { Request, Response } from 'express';
+import { createDeckSite } from './deck.ts';
 
 const site = Router();
 
-// safestudios.nl hosts nothing itself — /deck (and anything under it)
-// forwards to the product site. Mounting preserves the sub-path, so
-// /deck/privacy lands on deck.dj/privacy.
-site.use('/deck', (req: Request, res: Response) => {
-  res.redirect(301, `https://deck.dj${req.url === '/' ? '' : req.url}`);
-});
+// deck.dj's DNS registration is still in progress, so /deck serves the
+// product site in full for now. Once deck.dj resolves, replace this mount
+// with the original forward:
+//   site.use('/deck', (req, res) =>
+//     res.redirect(301, `https://deck.dj${req.url === '/' ? '' : req.url}`));
+site.use('/deck', createDeckSite('/deck', 'https://safestudios.nl'));
 
+// The Deck landing page is the only thing safestudios.nl hosts, so the
+// root bounces straight to it. 302 while deck.dj's DNS is pending — the
+// destination may become deck.dj later.
 site.get('/', (req: Request, res: Response) => {
-  res.send(`<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Safe Studios</title>
-    <style>
-      body { margin: 0; min-height: 100vh; display: grid; place-items: center;
-             background: #0b0c0f; color: #e8eaed;
-             font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; }
-      main { text-align: center; }
-      h1 { font-size: 1rem; font-weight: 600; letter-spacing: .35em;
-           text-transform: uppercase; color: #8a94a0; }
-      a { color: #ffb92e; text-decoration: none; font-size: 1.2rem; }
-      a:hover { text-decoration: underline; }
-    </style>
-  </head>
-  <body>
-    <main>
-      <h1>Safe Studios &middot; Amsterdam</h1>
-      <p><a href="https://deck.dj">Deck &mdash; audio player for DJs &rarr;</a></p>
-    </main>
-  </body>
-</html>`);
+  res.redirect(302, '/deck');
 });
 
 site.use((req: Request, res: Response) => {

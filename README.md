@@ -10,10 +10,11 @@ One server, three domains, routed on the Host header (`src/sites/site-for-host.t
 |---|---|
 | philmander.com | Personal blog (default for unrecognized hosts, including localhost) |
 | deck.dj | Product site for Deck: landing page, `/support`, `/privacy` |
-| safestudios.nl | Nothing served; `/deck/*` 301-redirects to deck.dj |
+| safestudios.nl | Serves the full Deck site under `/deck` (landing, `/deck/support`, `/deck/privacy`); the root 302-redirects to `/deck`. Once deck.dj's DNS is live, `/deck/*` can go back to a 301 redirect (see `src/sites/safestudios.ts`) |
 
 `philmander.com/deck/privacy` (the privacy URL published in the Deck app)
-301-redirects to `deck.dj/privacy`.
+temporarily 302-redirects to `safestudios.nl/deck/privacy`; once deck.dj is
+live it should return to a 301 to `deck.dj/privacy`.
 
 For local development the sites are reachable at
 http://deck.localhost:3000 and http://safestudios.localhost:3000
@@ -206,9 +207,8 @@ The app will be available at http://localhost:3000
 ├── sites/                # One router per domain
 │   ├── site-for-host.ts  # Host header → site mapping
 │   ├── philmander.ts     # philmander.com (blog)
-│   ├── deck.ts           # deck.dj (+ deck-page-html.ts, deck-home-html.ts)
+│   ├── deck.ts           # deck.dj (+ deck-*-html.ts page templates)
 │   └── safestudios.ts    # safestudios.nl (redirects only)
-├── content/deck/         # deck.dj markdown pages (support, privacy)
 ├── blog-service.ts       # Blog content fetching and rendering
 ├── blog-list-html.ts     # Blog list HTML generation
 ├── page-html.ts          # Page template

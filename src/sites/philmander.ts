@@ -27,9 +27,12 @@ site.get('/blog/:pageSlug', async (req: Request, res: Response<any, PageLocals>,
   }
 });
 
-// The Deck app's About screen links here; the page now lives on deck.dj
+// The Deck app's About screen links here. The page's permanent home is
+// deck.dj/privacy, but until that DNS registration completes it is served
+// at safestudios.nl/deck/privacy. 302, not 301, so browsers don't cache
+// the interim target past the switch back to deck.dj.
 site.get('/deck/privacy', (req: Request, res: Response) => {
-  res.redirect(301, 'https://deck.dj/privacy');
+  res.redirect(302, 'https://safestudios.nl/deck/privacy');
 });
 
 site.get('/', async (req: Request, res: Response<any, PageLocals>, next: NextFunction) => {
