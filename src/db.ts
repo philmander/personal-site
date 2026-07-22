@@ -27,16 +27,23 @@ export function getDb(): Kysely<Database> {
     if (!connectionString) {
       throw new Error('DATABASE_URL is not set');
     }
+    // DO managed Postgres serves a cert signed by DO's own CA. Verify
+    // against it when DATABASE_CA_CERT is set (App Platform: bind it to
+    // ${db.CA_CERT}); otherwise connect encrypted but unverified. The
+    // injected DATABASE_URL doesn't reliably say sslmode=require, so the
+    // fallback also matches the managed-database hostname.
+    const caCert = process.env.DATABASE_CA_CERT;
+    const wantsTls = connectionString.includes('sslmode=')
+      || connectionString.includes('.ondigitalocean.com');
     db = new Kysely<Database>({
       dialect: new PostgresDialect({
         pool: new pg.Pool({
           connectionString,
-          // DO managed Postgres serves a cert signed by DO's own CA, which
-          // node-postgres can't verify without the CA bundle — connect
-          // encrypted but unverified when the URL asks for TLS
-          ssl: connectionString.includes('sslmode=require')
-            ? { rejectUnauthorized: false }
-            : undefined,
+          ssl: caCert
+            ? { ca: caCert }
+            : wantsTls
+              ? { rejectUnauthorized: false }
+              : undefined,
           max: 5,
           // Fail the request fast when the DB is unreachable — the form
           // falls back to a "email us instead" message
