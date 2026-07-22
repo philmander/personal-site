@@ -107,7 +107,7 @@ export default function deckLandingHtml({
         <div class="hero-spacer"></div>
         <div class="hero-copy">
           <h1>No CDJ, no problem.</h1>
-          <p>${DESCRIPTION}</p>
+          <p class="hero-lede">${DESCRIPTION}</p>
           ${storeBadges()}
           <p class="fine-print">No ads &middot; No in-app purchases &middot; No data collected</p>
         </div>
