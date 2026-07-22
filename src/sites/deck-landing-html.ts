@@ -70,7 +70,7 @@ export default function deckLandingHtml({
   const featureTiles = FEATURES.map(f => `<div class="feature">
       <p class="feature-tag">${f.tag}</p>
       <h3>${f.title}</h3>
-      <p>${f.body}</p>
+      <p class="feature-body">${f.body}</p>
     </div>`).join('\n    ');
 
   const thumbs = shotData.map((s, i) => `<button class="shot-thumb${i === 0 ? ' selected' : ''}" type="button">

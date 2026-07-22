@@ -448,7 +448,7 @@ img {
   margin: 0 0 8px;
 }
 
-.feature p {
+.feature-body {
   font-size: 15px;
   line-height: 1.55;
   color: var(--muted);
