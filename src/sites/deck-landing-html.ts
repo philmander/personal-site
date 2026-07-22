@@ -56,7 +56,7 @@ function storeBadges(): string {
       <span class="badge-big">App&nbsp;Store</span>
     </span>
   </button>
-  <a class="store-badge" href="${PLAY_URL}">
+  <a class="store-badge" href="${PLAY_URL}" target="_blank" rel="noopener">
     ${PLAY_LOGO_SVG}
     <span class="badge-text">
       <span class="badge-small">Get it on</span>
@@ -98,7 +98,7 @@ export default function deckLandingHtml({
       <div class="nav-links">
         <a href="#setup">SETUP</a>
         <a href="#features">FEATURES</a>
-        <a class="get-deck" href="${PLAY_URL}">GET DECK</a>
+        <a class="get-deck" href="${PLAY_URL}" target="_blank" rel="noopener">GET DECK</a>
       </div>
     </nav>
 
@@ -175,7 +175,9 @@ export default function deckLandingHtml({
         <p class="kicker">03 — IN THE APP</p>
         <h2 id="shot-title">${shotData[0].title}</h2>
         <div class="shot-stage">
-          <img id="shot-main" src="${shotData[0].src}" alt="${shotData[0].title}">
+          <div class="shot-track" id="shot-track">
+            ${shotData.map((s, i) => `<img src="${s.src}" alt="${s.title}"${i === 0 ? '' : ' loading="lazy" decoding="async"'}>`).join('\n            ')}
+          </div>
           <button class="shot-arrow prev" type="button" aria-label="Previous screenshot">&#8249;</button>
           <button class="shot-arrow next" type="button" aria-label="Next screenshot">&#8250;</button>
         </div>
@@ -209,16 +211,14 @@ export default function deckLandingHtml({
     <script>
     (function () {
       var shots = ${JSON.stringify(shotData)};
-      var main = document.getElementById('shot-main');
+      var track = document.getElementById('shot-track');
       var title = document.getElementById('shot-title');
       var thumbs = Array.prototype.slice.call(document.querySelectorAll('.shot-thumb'));
       var current = 0;
       function show(n) {
         current = (n + shots.length) % shots.length;
-        var s = shots[current];
-        main.src = s.src;
-        main.alt = s.title;
-        title.textContent = s.title;
+        track.style.transform = 'translateX(' + (-current * 100) + '%)';
+        title.textContent = shots[current].title;
         thumbs.forEach(function (t, j) { t.classList.toggle('selected', j === current); });
       }
       document.querySelector('.shot-arrow.prev').addEventListener('click', function () { show(current - 1); });

@@ -485,8 +485,15 @@ img {
   background: #000;
 }
 
-.shot-stage img {
+.shot-track {
+  display: flex;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.shot-track img {
+  flex: 0 0 100%;
   width: 100%;
+  min-width: 100%;
   aspect-ratio: 2778 / 1284;
   object-fit: cover;
 }
@@ -770,6 +777,94 @@ img {
   font-weight: 600;
 }
 
+/* Feedback form */
+
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-field label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.form-field input,
+.form-field textarea {
+  font: inherit;
+  font-size: 16px;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.form-field textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--accent-dim);
+}
+
+/* The palette has no red — errors get the accent, like everything urgent here */
+.form-error {
+  font-size: 14px;
+  color: var(--accent);
+  margin: 0;
+}
+
+.form-fail {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--accent);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 0 0 24px;
+}
+
+.form-submit {
+  align-self: flex-start;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--bg);
+  background: var(--accent);
+  border: none;
+  border-radius: 999px;
+  padding: 12px 28px;
+  cursor: pointer;
+}
+
+.form-submit:hover {
+  background: var(--accent-soft);
+}
+
+/* Honeypot — parked off-screen rather than display:none so naive bots
+   still see a fillable field */
+.form-nectar {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 /* Footer */
 
 .footer {
@@ -814,5 +909,9 @@ img {
 
   .cta-tagline {
     animation: none;
+  }
+
+  .shot-track {
+    transition: none;
   }
 }
