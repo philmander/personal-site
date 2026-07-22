@@ -93,16 +93,24 @@ export default function deckLandingHtml({
       </div>
     </nav>
 
-    <header>
+    <header class="hero">
+      <div class="hero-bg">
+        <img src="/static/deck/hero.jpg" alt="Deck running on a phone plugged into a DJ mixer" fetchpriority="high">
+        <div class="scrim-x"></div>
+        <div class="scrim-y"></div>
+      </div>
       <div class="hero-banner">
         <img src="/static/deck/hero.jpg" alt="Deck running on a phone plugged into a DJ mixer" fetchpriority="high">
         <div class="scrim"></div>
       </div>
-      <div class="hero-copy">
-        <h1>No CDJ, no problem.</h1>
-        <p>${DESCRIPTION}</p>
-        ${storeBadges()}
-        <p class="fine-print">No ads &middot; No in-app purchases &middot; No data collected</p>
+      <div class="hero-content">
+        <div class="hero-spacer"></div>
+        <div class="hero-copy">
+          <h1>No CDJ, no problem.</h1>
+          <p>${DESCRIPTION}</p>
+          ${storeBadges()}
+          <p class="fine-print">No ads &middot; No in-app purchases &middot; No data collected</p>
+        </div>
       </div>
     </header>
 
