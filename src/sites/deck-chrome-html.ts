@@ -37,7 +37,7 @@ export function deckBrandHtml(basePath: string): string {
 
 export function deckFooterHtml(basePath: string): string {
   return `<footer class="footer">
-      <span>Deck &mdash; a standalone DJ deck for your phone or tablet</span>
+      <span>Deck &mdash; Pro Audio Player for DJs. Designed and built by Safe Studios in Amsterdam, NL.</span>
       <div class="footer-links">
         <a href="${basePath}/support">Support</a>
         <a href="${basePath}/privacy">Privacy</a>

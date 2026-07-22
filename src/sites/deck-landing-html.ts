@@ -161,16 +161,18 @@ export default function deckLandingHtml({
       </div>
     </section>
 
-    <section id="screens" class="section screens">
-      <p class="kicker">03 — IN THE APP</p>
-      <h2 id="shot-title">${shotData[0].title}</h2>
-      <div class="shot-stage">
-        <img id="shot-main" src="${shotData[0].src}" alt="${shotData[0].title}">
-        <button class="shot-arrow prev" type="button" aria-label="Previous screenshot">&#8249;</button>
-        <button class="shot-arrow next" type="button" aria-label="Next screenshot">&#8250;</button>
-      </div>
-      <div class="shot-thumbs">
-        ${thumbs}
+    <section id="screens" class="screens-band">
+      <div class="section">
+        <p class="kicker">03 — IN THE APP</p>
+        <h2 id="shot-title">${shotData[0].title}</h2>
+        <div class="shot-stage">
+          <img id="shot-main" src="${shotData[0].src}" alt="${shotData[0].title}">
+          <button class="shot-arrow prev" type="button" aria-label="Previous screenshot">&#8249;</button>
+          <button class="shot-arrow next" type="button" aria-label="Next screenshot">&#8250;</button>
+        </div>
+        <div class="shot-thumbs">
+          ${thumbs}
+        </div>
       </div>
     </section>
 
