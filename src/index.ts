@@ -5,11 +5,20 @@ import siteForHost from './sites/site-for-host.ts';
 import philmanderSite from './sites/philmander.ts';
 import safestudiosSite from './sites/safestudios.ts';
 import deckSite from './sites/deck.ts';
+import { migrateToLatest } from './migrate.ts';
 import { logger } from './logger.ts';
 
 (async () => {
   const app = express();
   const port = Number(process.env.PORT) || 3000;
+
+  // The database only backs the feedback form, so a failed migration run
+  // logs loudly but never stops the rest of the site from serving
+  if (process.env.DATABASE_URL) {
+    await migrateToLatest();
+  } else {
+    logger.warn('DATABASE_URL not set — skipping migrations');
+  }
 
   // TLS terminates in the proxy in front of this container; trust its
   // forwarded headers so req.hostname sees the requested domain
