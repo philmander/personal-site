@@ -209,6 +209,10 @@ img {
 }
 
 @media (max-width: 999px) {
+  .nav-links {
+    display: none;
+  }
+
   .hero-bg {
     display: none;
   }
@@ -385,13 +389,25 @@ img {
   width: 100%;
   height: clamp(240px, 45vw, 520px);
   object-fit: cover;
-  object-position: center 40%;
+  object-position: center;
 }
 
 .live-photo .scrim {
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, rgba(10, 10, 12, 0.5), transparent 30%, transparent 70%, rgba(10, 10, 12, 0.6));
+}
+
+.live-photo figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 14px clamp(20px, 5vw, 56px);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--text-mellow);
+  text-shadow: 0 1px 8px rgba(10, 10, 12, 0.9);
 }
 
 /* Features */
@@ -500,6 +516,7 @@ img {
 
 .shot-thumb {
   flex: 1 1 140px;
+  max-width: 240px;
   padding: 0;
   border: 1px solid var(--line);
   border-radius: 10px;
@@ -771,10 +788,6 @@ img {
 }
 
 @media (max-width: 720px) {
-  .nav-links {
-    display: none;
-  }
-
   .setup-steps,
   .setup-uses,
   .features-grid {

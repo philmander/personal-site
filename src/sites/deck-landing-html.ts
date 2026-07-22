@@ -19,10 +19,10 @@ const DESCRIPTION = 'Deck is a fully featured audio player built for DJs. '
   + 'digital tracks alongside your turntables.';
 
 const SHOTS = [
-  { file: 'hot-cues', label: 'HOT CUES', title: 'CDJ-style hot cues, ready to drop.' },
-  { file: 'loop', label: 'LOOP', title: 'Auto loops locked to the beat grid.' },
-  { file: 'zoom-in', label: 'WAVEFORM', title: 'Zoom in to the transient you need.' },
   { file: 'zoom-out', label: 'OVERVIEW', title: 'See the whole track at a glance.' },
+  { file: 'zoom-in', label: 'WAVEFORM', title: 'Zoom in to the transient you need.' },
+  { file: 'loop', label: 'LOOP', title: 'Auto loops locked to the beat grid.' },
+  { file: 'hot-cues', label: 'HOT CUES', title: 'CDJ-style hot cues, ready to drop.' },
   { file: 'library', label: 'LIBRARY', title: 'Your music, folders and playlists.' },
 ];
 
@@ -148,8 +148,9 @@ export default function deckLandingHtml({
     </section>
 
     <figure class="live-photo">
-      <img src="/static/deck/live.jpg" alt="Deck in a live setup next to a turntable" loading="lazy" decoding="async">
+      <img src="/static/deck/rig.jpg" alt="Two phones running Deck connected to a compact mixer" loading="lazy" decoding="async">
       <div class="scrim"></div>
+      <figcaption>Deck is pictured running on OnePlus 13 (left), iPhone 14 (right) through an Omnitronic Gnome 202 mini mixer</figcaption>
     </figure>
 
     <section id="features" class="section">
@@ -179,7 +180,7 @@ export default function deckLandingHtml({
       <div class="cta-inner">
         <h2>Turn a spare device into your next deck.</h2>
         ${storeBadges()}
-        <p class="cta-tagline">&#9679; NO ADS &middot; NO IAP &middot; NO TRACKING</p>
+        <p class="cta-tagline">&#9679; NO ADS &middot; NO IN-APP PURCHASES &middot; NO TRACKING</p>
       </div>
     </section>
 
