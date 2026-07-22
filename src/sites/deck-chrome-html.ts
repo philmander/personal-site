@@ -40,6 +40,7 @@ export function deckFooterHtml(basePath: string): string {
       <span>Deck &mdash; Pro Audio Player for DJs. Designed and built by Safe Studios in Amsterdam, NL.</span>
       <div class="footer-links">
         <a href="${basePath}/support">Support</a>
+        <a href="${basePath}/feedback">Feedback</a>
         <a href="${basePath}/privacy">Privacy</a>
         <span>&copy; 2026 Deck</span>
       </div>

@@ -4,7 +4,8 @@
     "node": ">=24.0.0"
   },
   "scripts": {
-    "start": "node --experimental-strip-types src/index.ts",
+    "start": "node --env-file-if-exists=.env --experimental-strip-types src/index.ts",
+    "db:migrate": "node --env-file-if-exists=.env --experimental-strip-types scripts/migrate.ts",
     "test": "node --experimental-strip-types --test 'spec/**/*.spec.ts'",
     "compile": "tsc --noEmit",
     "docker:build": "docker buildx build --platform linux/amd64 -t registry.digitalocean.com/philmander/personal-site:latest .",
@@ -23,7 +24,9 @@
     "compression": "^1.7.4",
     "express": "^4.21.1",
     "highlight.js": "^11.11.0",
+    "kysely": "^0.29.4",
     "marked": "^14.1.2",
+    "pg": "^8.22.0",
     "serve-static": "^1.16.2"
   },
   "devDependencies": {
@@ -31,6 +34,7 @@
     "@types/compression": "^1.7.5",
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.2",
+    "@types/pg": "^8.20.0",
     "@types/serve-static": "^1.15.7",
     "typescript": "^5.7.2"
   }
