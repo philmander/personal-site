@@ -30,6 +30,8 @@ test('landing renders all sections of the design', () => {
   assert.match(html, /Professional controls\. Super low latency\./);
   assert.strictEqual(html.match(/class="feature"/g)?.length, 9);
   assert.strictEqual(html.match(/<button class="shot-thumb/g)?.length, 5);
+  assert.match(html, /See Deck mixed live\./);
+  assert.strictEqual(html.match(/youtube-nocookie\.com\/embed\//g)?.length, 2);
   assert.match(html, /Turn a spare device into your next deck\./);
   // Play links out; the App Store badge opens the coming-soon dialog
   assert.match(html, /href="https:\/\/play\.google\.com\/store\/apps\/details\?id=com\.philmander\.deck"/);

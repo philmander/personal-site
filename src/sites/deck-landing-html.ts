@@ -187,6 +187,25 @@ export default function deckLandingHtml({
       </div>
     </section>
 
+    <section id="videos" class="section videos">
+      <p class="kicker">04 — IN ACTION</p>
+      <h2>See Deck mixed live.</h2>
+      <div class="videos-grid">
+        <figure class="video-figure">
+          <div class="video-frame">
+            <iframe src="https://www.youtube-nocookie.com/embed/sZn2bwKkx80" title="Mixing Deck with vinyl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <figcaption>Mixing Deck alongside vinyl on a turntable setup.</figcaption>
+        </figure>
+        <figure class="video-figure">
+          <div class="video-frame">
+            <iframe src="https://www.youtube-nocookie.com/embed/KoN0PL1KXz4" title="Mixing two devices running Deck" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <figcaption>Two devices, two Decks &mdash; an 8&Prime; Android tablet and an iPhone through one mixer.</figcaption>
+        </figure>
+      </div>
+    </section>
+
     <section class="cta">
       <img class="cta-photo" src="/static/deck/cta.jpg" alt="Deck beside glowing mixer channel meters" loading="lazy" decoding="async">
       <div class="cta-scrim"></div>
