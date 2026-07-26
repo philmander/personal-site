@@ -21,20 +21,44 @@ let db: Kysely<Database> | null = null;
  * Lazily-created Kysely instance so the site runs (and tests pass) without
  * a DATABASE_URL — only the feedback POST route touches the database.
  */
+/**
+ * pg overrides the pool's explicit `ssl` option with whatever `sslmode`
+ * the connection string carries (ConnectionParameters assigns the parsed
+ * URL over the config, and `sslmode=require` parses to "verify against
+ * system CAs") — which is how DO's self-signed CA chain kept failing no
+ * matter what `ssl` we passed. Strip the ssl params from the URL so the
+ * `ssl` option stays in charge, and derive from them whether TLS is
+ * wanted at all.
+ */
+export function splitSslParams(rawUrl: string): { connectionString: string; wantsTls: boolean } {
+  let url: URL;
+  try {
+    url = new URL(rawUrl);
+  } catch {
+    // Not URL-shaped (e.g. key=value DSN) — leave it alone
+    return { connectionString: rawUrl, wantsTls: rawUrl.includes('.ondigitalocean.com') };
+  }
+  const sslmode = url.searchParams.get('sslmode');
+  const wantsTls = sslmode !== null
+    ? sslmode !== 'disable'
+    : url.hostname.endsWith('.ondigitalocean.com');
+  for (const p of ['sslmode', 'sslcert', 'sslkey', 'sslrootcert', 'uselibpqcompat']) {
+    url.searchParams.delete(p);
+  }
+  return { connectionString: url.toString(), wantsTls };
+}
+
 export function getDb(): Kysely<Database> {
   if (!db) {
-    const connectionString = process.env.DATABASE_URL;
-    if (!connectionString) {
+    const rawUrl = process.env.DATABASE_URL;
+    if (!rawUrl) {
       throw new Error('DATABASE_URL is not set');
     }
     // DO managed Postgres serves a cert signed by DO's own CA. Verify
-    // against it when DATABASE_CA_CERT is set (App Platform: bind it to
-    // ${db.CA_CERT}); otherwise connect encrypted but unverified. The
-    // injected DATABASE_URL doesn't reliably say sslmode=require, so the
-    // fallback also matches the managed-database hostname.
+    // against it when DATABASE_CA_CERT is set; otherwise connect
+    // encrypted but unverified.
     const caCert = process.env.DATABASE_CA_CERT;
-    const wantsTls = connectionString.includes('sslmode=')
-      || connectionString.includes('.ondigitalocean.com');
+    const { connectionString, wantsTls } = splitSslParams(rawUrl);
     db = new Kysely<Database>({
       dialect: new PostgresDialect({
         pool: new pg.Pool({
