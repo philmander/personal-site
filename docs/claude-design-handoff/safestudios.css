@@ -1,0 +1,339 @@
+/* Safe Studios design system. Deliberately quieter than the Deck site
+   (static/deck/deck.css) that it shares a type family with: the studio is
+   the frame, so it stays monochrome bone-on-black and the acid-yellow
+   accent is spent only where Deck itself appears. */
+
+:root {
+  --bg: #0a0a0c;
+  --panel: #101013;
+  --panel-hover: #141418;
+  --line: #202024;
+  --line-soft: #1a1a1e;
+  --bone: #ece9e3;
+  --bone-soft: #d8d5ce;
+  --muted: #93908a;
+  --muted-deep: #6f6d67;
+  --accent: #faff63;
+  --accent-soft: #fdffa8;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--bone);
+  font-family: "IBM Plex Sans", -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.55;
+}
+
+::selection {
+  background: var(--bone);
+  color: var(--bg);
+}
+
+a {
+  color: var(--bone);
+  text-decoration: none;
+}
+
+img,
+svg {
+  display: block;
+}
+
+.wrap {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 40px);
+}
+
+/* Nav */
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  padding: 28px clamp(20px, 5vw, 40px);
+  max-width: 940px;
+  margin: 0 auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.brand .mark {
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 26px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+
+.nav-links a {
+  color: var(--muted);
+  transition: color 0.15s ease;
+}
+
+.nav-links a:hover {
+  color: var(--bone);
+}
+
+/* Hero */
+
+.hero {
+  padding: clamp(56px, 12vw, 120px) 0 clamp(48px, 9vw, 88px);
+}
+
+.kicker {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--muted-deep);
+  margin-bottom: 22px;
+}
+
+.hero h1 {
+  font-size: clamp(34px, 6.4vw, 62px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+  max-width: 15ch;
+}
+
+.hero-lede {
+  margin-top: 26px;
+  font-size: clamp(16px, 1.9vw, 19px);
+  color: var(--bone-soft);
+  max-width: 56ch;
+}
+
+/* The dictionary gloss — small, unexplained, and the one line that stops
+   "Safe" being read in a security context. */
+.gloss {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 14px;
+  color: var(--muted-deep);
+  max-width: 56ch;
+}
+
+.gloss .ipa {
+  color: var(--muted);
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.gloss .pos {
+  font-style: italic;
+  margin-right: 8px;
+}
+
+/* Sections */
+
+.section {
+  padding: clamp(48px, 9vw, 84px) 0;
+  border-top: 1px solid var(--line-soft);
+}
+
+.section h2 {
+  font-size: clamp(24px, 3.4vw, 34px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+/* Work — the one block that spends the accent */
+
+.work-card {
+  margin-top: 32px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: clamp(24px, 4vw, 38px);
+}
+
+.work-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.work-head img {
+  width: 56px;
+  height: 56px;
+  border-radius: 13px;
+  flex: none;
+}
+
+.work-title {
+  font-size: clamp(22px, 3vw, 28px);
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.work-sub {
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+.work-body {
+  margin-top: 22px;
+  color: var(--bone-soft);
+  max-width: 62ch;
+}
+
+.work-meta {
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.work-meta span {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 12px;
+}
+
+.work-actions {
+  margin-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border-radius: 10px;
+  padding: 11px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #0a0a0c;
+}
+
+.btn-primary:hover {
+  background: var(--accent-soft);
+}
+
+.btn-ghost {
+  border: 1px solid var(--line);
+  color: var(--bone);
+}
+
+.btn-ghost:hover {
+  border-color: #33333a;
+  background: var(--panel-hover);
+}
+
+.btn svg {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+  flex: none;
+}
+
+/* Approach */
+
+.principles {
+  margin-top: 34px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 28px;
+}
+
+.principle h3 {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 9px;
+}
+
+.principle p {
+  font-size: 15px;
+  color: var(--muted);
+}
+
+/* Contact */
+
+.contact-line {
+  margin-top: 22px;
+  font-size: clamp(17px, 2.4vw, 21px);
+  color: var(--bone-soft);
+}
+
+.contact-line a {
+  border-bottom: 1px solid #3a3a40;
+  padding-bottom: 2px;
+  transition: border-color 0.15s ease;
+}
+
+.contact-line a:hover {
+  border-bottom-color: var(--bone);
+}
+
+/* Footer */
+
+.footer {
+  border-top: 1px solid var(--line-soft);
+  padding: 30px 0 46px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px 24px;
+  font-size: 13px;
+  color: var(--muted-deep);
+}
+
+.footer a {
+  color: var(--muted-deep);
+}
+
+.footer a:hover {
+  color: var(--muted);
+}

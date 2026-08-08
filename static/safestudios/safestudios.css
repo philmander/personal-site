@@ -1,0 +1,199 @@
+/* Safe Studios design system — implements the "2a · Dark, formal" comp
+   from the Claude Design project "Safe Studios homepage" (handoff README
+   in that project is the source of truth for tokens and spacing).
+   Deliberately simpler and quieter than the Deck site it links to. */
+
+:root {
+  --bg: #16130f;
+  --text: #f2ede4;
+  --text-soft: rgba(242, 237, 228, 0.75);
+  --text-muted: rgba(242, 237, 228, 0.45);
+  --text-legal: rgba(242, 237, 228, 0.5);
+  --line: rgba(242, 237, 228, 0.12);
+  --accent: #ff2e88;
+  --pad-x: 56px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: 0.7;
+}
+
+img {
+  display: block;
+}
+
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Header */
+
+.site-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  padding: 28px var(--pad-x);
+  border-bottom: 1px solid var(--line);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+/* The mark: short bar, tall bar, dot (2:4:1) in fluorescent pink */
+.mark {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 21px;
+}
+
+.mark span {
+  width: 5.5px;
+  border-radius: 99px;
+  background: var(--accent);
+}
+
+.mark span:nth-child(1) { height: 10.5px; }
+.mark span:nth-child(2) { height: 21px; }
+.mark span:nth-child(3) { height: 5.5px; }
+
+.wordmark {
+  font: 700 20px "Space Grotesk", Helvetica, Arial, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.head-mail {
+  font: 500 15px "Space Grotesk", Helvetica, Arial, sans-serif;
+}
+
+/* Intro */
+
+.intro {
+  padding: 64px var(--pad-x) 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.intro p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--text-soft);
+}
+
+.deck-link {
+  font: 500 17px "Space Grotesk", Helvetica, Arial, sans-serif;
+  color: var(--accent);
+}
+
+/* Deck image */
+
+.deck-figure {
+  padding: 0 var(--pad-x) 56px;
+}
+
+.deck-figure .frame {
+  border-radius: 24px;
+  overflow: hidden;
+  aspect-ratio: 16 / 7;
+  border: 1.5px solid var(--text);
+}
+
+.deck-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 0% 30%;
+}
+
+/* Footer info block */
+
+.info {
+  border-top: 1px solid var(--line);
+  padding: 40px var(--pad-x);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.info h2 {
+  font: 700 13px "Space Grotesk", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.info div,
+.info a {
+  color: var(--text-soft);
+}
+
+.info .contact a {
+  color: var(--text);
+}
+
+/* Legal bar */
+
+.legal {
+  border-top: 1px solid var(--line);
+  padding: 20px var(--pad-x);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  font-size: 13px;
+  color: var(--text-legal);
+}
+
+/* Responsive — the comp was designed at ~1100px; below ~700px stack the
+   footer grid and relax the image crop, per the handoff's suggestion */
+
+@media (max-width: 700px) {
+  :root {
+    --pad-x: 24px;
+  }
+
+  .intro {
+    padding-top: 44px;
+  }
+
+  .deck-figure .frame {
+    aspect-ratio: 16 / 9;
+  }
+
+  .info {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}

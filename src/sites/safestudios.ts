@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import type { Request, Response } from 'express';
 import { createDeckSite } from './deck.ts';
+import safestudiosLandingHtml from './safestudios-landing-html.ts';
 import { adminAuth } from '../admin-auth.ts';
 import feedbackAdminHtml from './feedback-admin-html.ts';
 import { getDb } from '../db.ts';
@@ -32,11 +33,11 @@ site.get('/admin/feedback', adminAuth, async (req: Request, res: Response) => {
 //     res.redirect(301, `https://deck.dj${req.url === '/' ? '' : req.url}`));
 site.use('/deck', createDeckSite('/deck', 'https://safestudios.nl'));
 
-// The Deck landing page is the only thing safestudios.nl hosts, so the
-// root bounces straight to it. 302 while deck.dj's DNS is pending — the
-// destination may become deck.dj later.
+// The studio's own landing page. It used to bounce to /deck, but Apple's
+// organization verification wants safestudios.nl to read plainly as the
+// company's site rather than as the product's.
 site.get('/', (req: Request, res: Response) => {
-  res.redirect(302, '/deck');
+  res.send(safestudiosLandingHtml());
 });
 
 site.use((req: Request, res: Response) => {
