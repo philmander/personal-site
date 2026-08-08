@@ -13,7 +13,7 @@ export default function deckSupportHtml(opts: { basePath?: string; origin?: stri
     lede: `Questions, bug reports and feature requests are all welcome &mdash; email ${EMAIL} and you'll hear back from the developer.`,
     sections: [
       `<h2>How do I connect my device to a mixer?</h2>
-          <p>Use a USB-C to RCA cable from your Android device into one of your mixer's line input channels. Deck then behaves like any other line source &mdash; play, cue, loop and beat-match alongside your turntables.</p>`,
+          <p>Use a USB-C or Lightning to RCA cable from your device into one of your mixer's line input channels. Deck then behaves like any other line source &mdash; play, cue, loop and beat-match alongside your turntables.</p>`,
       `<h2>The beat grid is slightly off &mdash; can I fix it?</h2>
           <p>Yes. BPM detection is automatic, but you can override it: tap the tempo manually and shift the beat grid using the beatgrid controls until the markers sit on the beats.</p>`,
       `<h2>Does Deck work offline?</h2>

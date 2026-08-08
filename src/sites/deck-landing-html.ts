@@ -1,10 +1,8 @@
-import { PLAY_URL, deckHeadHtml, deckBrandHtml, deckFooterHtml } from './deck-chrome-html.ts';
+import { PLAY_URL, APP_STORE_URL, deckHeadHtml, deckBrandHtml, deckFooterHtml } from './deck-chrome-html.ts';
 
 /**
  * The deck.dj landing page, implementing the "Deck Landing" Claude Design
- * comp (claude.ai/design project "DJ App Deck landing page"). The App
- * Store badge opens the comp's "Coming soon" dialog until the iOS app
- * ships — swap it for a real store link then.
+ * comp (claude.ai/design project "DJ App Deck landing page").
  */
 
 interface DeckLandingOptions {
@@ -49,13 +47,13 @@ const PLAY_LOGO_SVG = '<svg class="badge-play" viewBox="0 0 512 512" aria-hidden
 
 function storeBadges(): string {
   return `<div class="store-badges">
-  <button class="store-badge js-coming-soon" type="button">
+  <a class="store-badge" href="${APP_STORE_URL}" target="_blank" rel="noopener">
     ${APPLE_LOGO_SVG}
     <span class="badge-text">
       <span class="badge-small">Download on the</span>
       <span class="badge-big">App&nbsp;Store</span>
     </span>
-  </button>
+  </a>
   <a class="store-badge" href="${PLAY_URL}" target="_blank" rel="noopener">
     ${PLAY_LOGO_SVG}
     <span class="badge-text">
@@ -98,7 +96,7 @@ export default function deckLandingHtml({
       <div class="nav-links">
         <a href="#setup">SETUP</a>
         <a href="#features">FEATURES</a>
-        <a class="get-deck" href="${PLAY_URL}" target="_blank" rel="noopener">GET DECK</a>
+        <a class="get-deck" href="#get">GET DECK</a>
       </div>
     </nav>
 
@@ -206,7 +204,7 @@ export default function deckLandingHtml({
       </div>
     </section>
 
-    <section class="cta">
+    <section id="get" class="cta">
       <img class="cta-photo" src="/static/deck/cta.jpg" alt="Deck beside glowing mixer channel meters" loading="lazy" decoding="async">
       <div class="cta-scrim"></div>
       <div class="cta-inner">
@@ -215,15 +213,6 @@ export default function deckLandingHtml({
         <p class="cta-tagline">&#9679; NO ADS &middot; NO IN-APP PURCHASES &middot; NO TRACKING</p>
       </div>
     </section>
-
-    <div class="dialog-overlay" id="coming-soon" hidden>
-      <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="coming-soon-title">
-        <img src="/static/deck/icon.png" alt="" width="56" height="56">
-        <h3 id="coming-soon-title">Coming soon&hellip;</h3>
-        <p>Deck for iOS is on its way to the App Store. In the meantime, it's available now on Google Play.</p>
-        <button class="dialog-ok" type="button">OK</button>
-      </div>
-    </div>
 
     ${deckFooterHtml(basePath)}
 
@@ -243,16 +232,6 @@ export default function deckLandingHtml({
       document.querySelector('.shot-arrow.prev').addEventListener('click', function () { show(current - 1); });
       document.querySelector('.shot-arrow.next').addEventListener('click', function () { show(current + 1); });
       thumbs.forEach(function (t, j) { t.addEventListener('click', function () { show(j); }); });
-
-      var overlay = document.getElementById('coming-soon');
-      function closeDialog() { overlay.hidden = true; }
-      Array.prototype.forEach.call(document.querySelectorAll('.js-coming-soon'), function (b) {
-        b.addEventListener('click', function () { overlay.hidden = false; });
-      });
-      overlay.addEventListener('click', closeDialog);
-      overlay.querySelector('.dialog').addEventListener('click', function (e) { e.stopPropagation(); });
-      overlay.querySelector('.dialog-ok').addEventListener('click', closeDialog);
-      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeDialog(); });
     })();
     </script>
   </body>

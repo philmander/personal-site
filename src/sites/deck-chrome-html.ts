@@ -4,6 +4,7 @@
  */
 
 export const PLAY_URL = 'https://play.google.com/store/apps/details?id=com.philmander.deck';
+export const APP_STORE_URL = 'https://apps.apple.com/app/deck-audio-player-for-djs/id6791237893';
 
 export function deckHeadHtml({
   title,
